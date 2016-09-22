@@ -12,8 +12,12 @@ class CategoryController extends CommonController
     public function index()
     {
         $category = (new Category)->tree();
-        //dd($category);
         return view('admin.category.index')->with('data', $category);
+    }
+
+    public function changeOrder()
+    {
+        
     }
 
     public function store()

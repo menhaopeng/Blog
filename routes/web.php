@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web','admin.login'], 'prefix' => 'admin', 'names
     Route::get('quit', 'LoginController@quit');
     Route::any('repass', 'IndexController@repass');
 
+
+    Route::post('cate/changeorder', 'CategoryController@changeOrder');
     Route::resource('category', 'CategoryController');
 });
 

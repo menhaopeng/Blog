@@ -1,9 +1,9 @@
-@extends('layous.admin');
+@extends('layous.admin')
 @section('content')
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/index')}}">首页</a> &raquo; 全部分类
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 全部分类
     </div>
     <!--面包屑导航 结束-->
 
@@ -57,9 +57,10 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
+                            {{csrf_field()}}
                             <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
                             <td class="tc">
-                                <input type="text" name="ord[]" value="{{$v->cate_order}}">
+                                <input type="text" onchange="changeorder()" value="{{$v->cate_order}}">
                             </td>
                             <td class="tc">{{$v->cate_id}}</td>
                             <td>
@@ -107,4 +108,12 @@
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
+
+    <script>
+        function changeorder() {
+            $.post("{{url('admin/cate/changeorder')}}", {'_token':'{{csrf_token()}}'}, function (data) {
+                
+            });
+        }
+    </script>
 @endsection
