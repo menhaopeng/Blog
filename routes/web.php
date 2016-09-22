@@ -29,6 +29,8 @@ Route::group(['middleware' => ['web','admin.login'], 'prefix' => 'admin', 'names
     Route::get('info', 'IndexController@info');
     Route::get('quit', 'LoginController@quit');
     Route::any('repass', 'IndexController@repass');
+
+    Route::resource('category', 'CategoryController');
 });
 
 

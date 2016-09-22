@@ -11,13 +11,17 @@
     <div class="result_wrap">
         <div class="result_title">
             <h3>修改密码</h3>
-            <div class="mark">
-                @if(count($errors) > 0)
-                    @foreach($errors->all() as $error)
-                        <p>{{$error}}</p>
-                    @endforeach
-                @endif
-            </div>
+            @if(count($errors) > 0)
+                <div class="mark">
+                    @if(is_object($errors))
+                        @foreach($errors->all() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                    @else
+                        {{$errors}}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
     <!--结果集标题与导航组件 结束-->
