@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'category';      //设置表名称
-    protected $primaryKey = 'user_id';      //设置主键字段
+    protected $primaryKey = 'cate_id';      //设置主键字段
     public $timestamps = false;     //取消自动时间
 
     public function tree()
     {
-        $category = $this->all();
+        $category = $this->orderBy('cate_order', 'asc')->get();
         return $this->getTree($category);
     }
 

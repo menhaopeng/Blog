@@ -47,8 +47,7 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%"><input type="checkbox" name=""></th>
-                        <th class="tc">排序</th>
+                        <th class="tc" width="5%">排序</th>
                         <th class="tc">ID</th>
                         <th>分类名称</th>
                         <th>分类说明</th>
@@ -58,9 +57,9 @@
                     @foreach($data as $v)
                         <tr>
                             {{csrf_field()}}
-                            <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
                             <td class="tc">
-                                <input type="text" onchange="changeorder()" value="{{$v->cate_order}}">
+                                <input type="text" onchange="changeorder(this,{{$v->cate_id}})"
+                                       value="{{$v->cate_order}}">
                             </td>
                             <td class="tc">{{$v->cate_id}}</td>
                             <td>
@@ -110,9 +109,18 @@
     <!--搜索结果页面 列表 结束-->
 
     <script>
-        function changeorder() {
-            $.post("{{url('admin/cate/changeorder')}}", {'_token':'{{csrf_token()}}'}, function (data) {
-                
+        function changeorder(obj, cate_id) {
+            var cate_order = $(obj).val();
+            $.post("{{url('admin/cate/changeorder')}}", {
+                '_token': '{{csrf_token()}}',
+                'cate_id': cate_id,
+                'cate_order': cate_order
+            }, function (data) {
+                if (data.status == 1) {
+                    layer.alert(data.status, {icon: 6});
+                }else{
+                    layer.alert(data.status, {icon: 5});
+                }
             });
         }
     </script>
