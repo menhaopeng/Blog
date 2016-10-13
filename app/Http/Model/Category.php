@@ -9,6 +9,7 @@ class Category extends Model
     protected $table = 'category';      //设置表名称
     protected $primaryKey = 'cate_id';      //设置主键字段
     public $timestamps = false;     //取消自动时间
+    protected $guarded = [];
 
     public function tree()
     {

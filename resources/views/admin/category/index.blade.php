@@ -68,7 +68,7 @@
                             <td>{{$v->cate_title}}</td>
                             <td>{{$v->cate_view}}</td>
                             <td>
-                                <a href="#">修改</a>
+                                <a href="{{url('admin/category/'.$v->cate_id.'/edit')}}">修改</a>
                                 <a href="#">删除</a>
                             </td>
                         </tr>
@@ -117,9 +117,9 @@
                 'cate_order': cate_order
             }, function (data) {
                 if (data.status == 1) {
-                    layer.alert(data.status, {icon: 6});
-                }else{
-                    layer.alert(data.status, {icon: 5});
+                    layer.alert(data.msg, {icon: 6});
+                } else {
+                    layer.alert(data.msg, {icon: 5});
                 }
             });
         }

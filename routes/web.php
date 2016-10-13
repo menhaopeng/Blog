@@ -33,6 +33,11 @@ Route::group(['middleware' => ['web','admin.login'], 'prefix' => 'admin', 'names
 
     Route::post('cate/changeorder', 'CategoryController@changeOrder');
     Route::resource('category', 'CategoryController');
+
+    Route::resource('article', 'ArticleController');
+
+    //上传图片
+    Route::any('upload', 'CommonController@upload');
 });
 
 
