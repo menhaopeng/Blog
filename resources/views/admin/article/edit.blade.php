@@ -3,7 +3,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 添加文章
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 编辑文章
     </div>
     <!--面包屑导航 结束-->
 
@@ -33,7 +33,8 @@
     <!--结果集标题与导航组件 结束-->
 
     <div class="result_wrap">
-        <form action="{{url('admin/article')}}" method="post">
+        <form action="{{url('admin/article/'.$field->art_id)}}" method="post">
+            <input type="hidden" name="_method" value="put">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
@@ -42,7 +43,7 @@
                     <td>
                         <select name="cate_id">
                             @foreach($data as $d)
-                                <option value="{{$d->cate_id}}">{{$d->_cate_name}}</option>
+                                <option value="{{$d->cate_id}}" @if($d->cate_id==$field->cate_id) selected @endif> {{$d->_cate_name}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -50,19 +51,19 @@
                 <tr>
                     <th><i class="require">*</i>文章标题：</th>
                     <td>
-                        <input type="text" class="lg" name="art_title">
+                        <input type="text" class="lg" name="art_title" value="{{$field->art_title}}">
                     </td>
                 </tr>
                 <tr>
                     <th>编辑：</th>
                     <td>
-                        <input type="text" name="art_editor">
+                        <input type="text" name="art_editor" value="{{$field->art_editor}}">
                     </td>
                 </tr>
                 <tr>
                     <th>缩略图：</th>
                     <td>
-                        <input type="text" name="art_thumb" value="">
+                        <input type="text" name="art_thumb" value="{{$field->art_thumb}}">
                         <script type="text/javascript"
                                 src="{{asset('resources/org/uploadify/jquery.uploadify.min.js')}}"></script>
                         <link rel="stylesheet" type="text/css"
@@ -106,19 +107,19 @@
                 <tr>
                     <th></th>
                     <td>
-                        <img src="" alt="" id="art_thumb_img" style="max-width: 350px;max-height: 100px;">
+                        <img src="{{$field->art_thumb}}" alt="" id="art_thumb_img" style="max-width: 350px;max-height: 100px;">
                     </td>
                 </tr>
                 <tr>
                     <th>关键词：</th>
                     <td>
-                        <input type="text" class="lg" name="art_tag">
+                        <input type="text" class="lg" name="art_tag" value="{{$field->art_tag}}">
                     </td>
                 </tr>
                 <tr>
                     <th>描述：</th>
                     <td>
-                        <textarea name="art_description"></textarea>
+                        <textarea name="art_description">{{$field->art_description}}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -131,7 +132,7 @@
                         <script type="text/javascript" charset="utf-8"
                                 src="{{url('resources/org/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
                         <script id="editor" name="art_content" type="text/plain"
-                                style="width:860px;height:500px;"></script>
+                                style="width:860px;height:500px;">{!! $field->art_content !!}</script>
                         <style>
                             .edui-default {
                                 line-height: 28px;
