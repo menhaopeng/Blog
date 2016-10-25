@@ -36,6 +36,18 @@ Route::group(['middleware' => ['web','admin.login'], 'prefix' => 'admin', 'names
 
     Route::resource('article', 'ArticleController');
 
+    //友情链接
+    Route::resource('links', 'LinksController');
+    Route::post('link/changeorder', 'LinksController@changeOrder');
+
+    //自定义导航
+    Route::resource('navs', 'NavsController');
+    Route::post('nav/changeorder', 'NavsController@changeOrder');
+
+    //配置项
+    Route::resource('config', 'ConfigController');
+    Route::post('conf/changeorder', 'ConfigController@changeOrder');
+
     //上传图片
     Route::any('upload', 'CommonController@upload');
 });

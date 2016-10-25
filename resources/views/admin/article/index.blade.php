@@ -16,9 +16,8 @@
             <!--快捷导航 开始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="#"><i class="fa fa-plus"></i>新增文章</a>
-                    <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
-                    <a href="#"><i class="fa fa-refresh"></i>更新排序</a>
+                    <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>添加文章</a>
+                    <a href="{{url('admin/article')}}"><i class="fa fa-recycle"></i>文章列表</a>
                 </div>
             </div>
             <!--快捷导航 结束-->
@@ -46,7 +45,7 @@
                             <td>{{date('Y-m-d H:i:s', $v->art_time)}}</td>
                             <td>
                                 <a href="{{url('admin/article/'.$v->art_id.'/edit')}}">修改</a>
-                                <a href="#">删除</a>
+                                <a href="javascript:;" onclick="delArt({{$v->art_id}})">删除</a>
                             </td>
                         </tr>
                     @endforeach
@@ -64,4 +63,27 @@
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
+    <script>
+        function delArt(art_id) {
+            //询问框
+            layer.confirm('您确定要删除该文章？', {
+                btn: ['删除', '取消'] //按钮
+            }, function () {
+                //删除
+                $.post("{{url('admin/article/')}}/" + art_id, {
+                    '_token': '{{csrf_token()}}',
+                    '_method': 'delete'
+                }, function (data) {
+                    if (data.status == 0) {
+                        location.href = location.href;
+                        layer.alert(data.msg, {icon: 6});
+                    } else {
+                        layer.alert(data.msg, {icon: 5});
+                    }
+                });
+            }, function () {
+                //取消
+            });
+        }
+    </script>
 @endsection

@@ -1,11 +1,11 @@
 @extends('layous.admin')
 @section('content')
-    <!--面包屑导航 开始-->
+    <!--面包屑配置 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 全部分类
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 配置项
     </div>
-    <!--面包屑导航 结束-->
+    <!--面包屑配置 结束-->
 
     <!--结果页快捷搜索框 开始-->
     {{--<div class="search_wrap">
@@ -33,16 +33,16 @@
     <form action="#" method="post">
         <div class="result_wrap">
             <div class="result_title">
-                <h3>分类管理</h3>
+                <h3>配置项管理</h3>
             </div>
-            <!--快捷导航 开始-->
+            <!--快捷配置 开始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>添加分类</a>
-                    <a href="{{url('admin/category')}}"><i class="fa fa-recycle"></i>全部分类</a>
+                    <a href="{{url('admin/config/create')}}"><i class="fa fa-plus"></i>添加配置</a>
+                    <a href="{{url('admin/config')}}"><i class="fa fa-recycle"></i>全部配置</a>
                 </div>
             </div>
-            <!--快捷导航 结束-->
+            <!--快捷配置 结束-->
         </div>
 
         <div class="result_wrap">
@@ -51,48 +51,31 @@
                     <tr>
                         <th class="tc" width="5%">排序</th>
                         <th class="tc">ID</th>
-                        <th>分类名称</th>
-                        <th>分类说明</th>
-                        <th>查看次数</th>
+                        <th>配置标题</th>
+                        <th>配置名称</th>
+                        <th>配置说明</th>
                         <th>操作</th>
                     </tr>
                     @foreach($data as $v)
                         <tr>
                             {{csrf_field()}}
                             <td class="tc">
-                                <input type="text" onchange="changeorder(this,{{$v->cate_id}})"
-                                       value="{{$v->cate_order}}">
+                                <input type="text" onchange="changeorder(this,{{$v->conf_id}})"
+                                       value="{{$v->conf_order}}">
                             </td>
-                            <td class="tc">{{$v->cate_id}}</td>
+                            <td class="tc">{{$v->conf_id}}</td>
                             <td>
-                                <a href="#">{{$v->_cate_name}}</a>
+                                <a href="#">{{$v->conf_title}}</a>
                             </td>
-                            <td>{{$v->cate_title}}</td>
-                            <td>{{$v->cate_view}}</td>
+                            <td>{{$v->conf_name}}</td>
+                            <td>{{$v->conf_tips}}</td>
                             <td>
-                                <a href="{{url('admin/category/'.$v->cate_id.'/edit')}}">修改</a>
-                                <a href="javascript:;" onclick="delCate({{$v->cate_id}})">删除</a>
+                                <a href="{{url('admin/config/'.$v->conf_id.'/edit')}}">修改</a>
+                                <a href="javascript:;" onclick="delLink({{$v->conf_id}})">删除</a>
                             </td>
                         </tr>
                     @endforeach
                 </table>
-
-
-                <div class="page_nav">
-                    <div>
-                        <a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a>
-                        <a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一页</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/6.html">6</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/7.html">7</a>
-                        <span class="current">8</span>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/9.html">9</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/10.html">10</a>
-                        <a class="next" href="/wysls/index.php/Admin/Tag/index/p/9.html">下一页</a>
-                        <a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a>
-                        <span class="rows">11 条记录</span>
-                    </div>
-                </div>
-
 
                 <div class="page_list">
                     <ul>
@@ -111,12 +94,12 @@
     <!--搜索结果页面 列表 结束-->
 
     <script>
-        function changeorder(obj, cate_id) {
-            var cate_order = $(obj).val();
-            $.post("{{url('admin/cate/changeorder')}}", {
+        function changeorder(obj, conf_id) {
+            var conf_order = $(obj).val();
+            $.post("{{url('admin/conf/changeorder')}}", {
                 '_token': '{{csrf_token()}}',
-                'cate_id': cate_id,
-                'cate_order': cate_order
+                'conf_id': conf_id,
+                'conf_order': conf_order
             }, function (data) {
                 if (data.status == 1) {
                     layer.alert(data.msg, {icon: 6});
@@ -126,13 +109,13 @@
             });
         }
 
-        function delCate(cate_id) {
+        function delLink(conf_id) {
             //询问框
-            layer.confirm('您确定要删除该分类？', {
+            layer.confirm('您确定要删除该配置？', {
                 btn: ['删除', '取消'] //按钮
             }, function () {
                 //删除
-                $.post("{{url('admin/category/')}}/" + cate_id, {
+                $.post("{{url('admin/config/')}}/" + conf_id, {
                     '_token': '{{csrf_token()}}',
                     '_method': 'delete'
                 }, function (data) {

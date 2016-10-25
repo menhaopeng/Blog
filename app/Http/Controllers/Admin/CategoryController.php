@@ -88,16 +88,35 @@ class CategoryController extends CommonController
         }
     }
 
+    //删除单个分类信息
+    public function destroy($cate_id)
+    {
+        $is_cate = Category::where('cate_pid',$cate_id)->get();
+        if (!$is_cate->isEmpty()){
+            $data = [
+                'status' => 2,
+                'msg' => '删除分类失败，请先删除该分类下的所有子分类后重试！',
+            ];
+        }else{
+            $re = Category::where('cate_id', $cate_id)->delete();
+            if ($re) {
+                $data = [
+                    'status' => 0,
+                    'msg' => '删除分类成功！',
+                ];
+            } else {
+                $data = [
+                    'status' => 1,
+                    'msg' => '删除分类失败，请稍后重试！',
+                ];
+            }
+        }
+        return $data;
+    }
+
     //显示单个分类信息
     public function show()
     {
 
     }
-
-
-    public function destroy()
-    {
-
-    }
-
 }

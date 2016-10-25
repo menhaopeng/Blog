@@ -14,8 +14,8 @@ class ArticleController extends CommonController
 {
     public function index()
     {
-        $data = Article::orderBy('art_id','desc')->paginate(10);
-        return view('admin.article.index',compact('data'));
+        $data = Article::orderBy('art_id', 'desc')->paginate(10);
+        return view('admin.article.index', compact('data'));
     }
 
 
@@ -27,7 +27,8 @@ class ArticleController extends CommonController
     }
 
     //添加分类提交
-    public function store(){
+    public function store()
+    {
         $input = Input::except('_token');
         $input['art_time'] = time();
         $reles = [
@@ -35,8 +36,8 @@ class ArticleController extends CommonController
             'art_content' => 'required',
         ];
         $message = [
-            'art_title.required' => '文章名称不能为空！',
-            'art_content.required' => '文章名称不能为空！',
+            'art_title.required' => '文章标题不能为空！',
+            'art_content.required' => '文章内容不能为空！',
         ];
         $validator = Validator::make($input, $reles, $message);
         if ($validator->passes()) {
@@ -71,4 +72,21 @@ class ArticleController extends CommonController
         }
     }
 
+    //删除单个文章信息
+    public function destroy($art_id)
+    {
+        $re = Article::where('art_id', $art_id)->delete();
+        if ($re) {
+            $data = [
+                'status' => 0,
+                'msg' => '删除文章成功！',
+            ];
+        } else {
+            $data = [
+                'status' => 1,
+                'msg' => '删除文章失败，请稍后重试！',
+            ];
+        }
+        return $data;
+    }
 }
