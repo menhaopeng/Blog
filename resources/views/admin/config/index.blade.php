@@ -3,7 +3,7 @@
     <!--面包屑配置 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 配置项
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 网站配置
     </div>
     <!--面包屑配置 结束-->
 
@@ -30,23 +30,35 @@
     <!--结果页快捷搜索框 结束-->
 
     <!--搜索结果页面 列表 开始-->
-    <form action="#" method="post">
-        <div class="result_wrap">
-            <div class="result_title">
-                <h3>配置项管理</h3>
-            </div>
-            <!--快捷配置 开始-->
-            <div class="result_content">
-                <div class="short_wrap">
-                    <a href="{{url('admin/config/create')}}"><i class="fa fa-plus"></i>添加配置</a>
-                    <a href="{{url('admin/config')}}"><i class="fa fa-recycle"></i>全部配置</a>
+    <div class="result_wrap">
+        <div class="result_title">
+            <h3>配置项管理</h3>
+            @if(count($errors) > 0)
+                <div class="mark">
+                    @if(is_object($errors))
+                        @foreach($errors->all() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                    @else
+                        {{$errors}}
+                    @endif
                 </div>
-            </div>
-            <!--快捷配置 结束-->
+            @endif
         </div>
+        <!--快捷配置 开始-->
+        <div class="result_content">
+            <div class="short_wrap">
+                <a href="{{url('admin/config/create')}}"><i class="fa fa-plus"></i>添加配置</a>
+                <a href="{{url('admin/config')}}"><i class="fa fa-recycle"></i>全部配置</a>
+            </div>
+        </div>
+        <!--快捷配置 结束-->
+    </div>
 
-        <div class="result_wrap">
-            <div class="result_content">
+    <div class="result_wrap">
+        <div class="result_content">
+            <form action="{{url('admin/conf/changecontent')}}" method="post">
+                {{csrf_field()}}
                 <table class="list_tab">
                     <tr>
                         <th class="tc" width="5%">排序</th>
@@ -58,7 +70,6 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
-                            {{csrf_field()}}
                             <td class="tc">
                                 <input type="text" onchange="changeorder(this,{{$v->conf_id}})"
                                        value="{{$v->conf_order}}">
@@ -68,7 +79,10 @@
                                 <a href="#">{{$v->conf_title}}</a>
                             </td>
                             <td>{{$v->conf_name}}</td>
-                            <td>{{$v->conf_tips}}</td>
+                            <td>
+                                <input type="hidden" name="conf_id[]" value="{{$v->conf_id}}">
+                                {!! $v->_html !!}
+                            </td>
                             <td>
                                 <a href="{{url('admin/config/'.$v->conf_id.'/edit')}}">修改</a>
                                 <a href="javascript:;" onclick="delLink({{$v->conf_id}})">删除</a>
@@ -76,21 +90,13 @@
                         </tr>
                     @endforeach
                 </table>
-
-                <div class="page_list">
-                    <ul>
-                        <li class="disabled"><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+                <div class="btn_group">
+                    <input type="submit" value="提交">
+                    <input type="button" class="back" onclick="history.go(-1)" value="返回">
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
     <!--搜索结果页面 列表 结束-->
 
     <script>

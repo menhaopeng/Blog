@@ -3,7 +3,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 全部分类
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 分类列表
     </div>
     <!--面包屑导航 结束-->
 
@@ -76,24 +76,6 @@
                         </tr>
                     @endforeach
                 </table>
-
-
-                <div class="page_nav">
-                    <div>
-                        <a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a>
-                        <a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一页</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/6.html">6</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/7.html">7</a>
-                        <span class="current">8</span>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/9.html">9</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/10.html">10</a>
-                        <a class="next" href="/wysls/index.php/Admin/Tag/index/p/9.html">下一页</a>
-                        <a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a>
-                        <span class="rows">11 条记录</span>
-                    </div>
-                </div>
-
-
                 <div class="page_list">
                     <ul>
                         <li class="disabled"><a href="#">&laquo;</a></li>

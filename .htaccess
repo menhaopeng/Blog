@@ -3,6 +3,10 @@
         Options -MultiViews
     </IfModule>
 
+    <Files ".env" >
+        Require all denied
+    </Files>
+
     RewriteEngine On
 
     # Redirect Trailing Slashes If Not A Folder...

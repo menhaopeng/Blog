@@ -12,8 +12,8 @@
 */
 
 Route::get('/', 'Home\IndexController@index');
-Route::get('/cate', 'Home\IndexController@cate');
-Route::get('/art', 'Home\IndexController@art');
+Route::get('/cate/{cate_id}', 'Home\IndexController@cate');
+Route::get('/a/{art_id}', 'Home\IndexController@art');
 
 
 
@@ -50,6 +50,8 @@ Route::group(['middleware' => ['web','admin.login'], 'prefix' => 'admin', 'names
     //配置项
     Route::resource('config', 'ConfigController');
     Route::post('conf/changeorder', 'ConfigController@changeOrder');
+    Route::post('conf/changecontent', 'ConfigController@changeContent');
+    Route::get('conf/putfile', 'ConfigController@putFile');
 
     //上传图片
     Route::any('upload', 'CommonController@upload');
